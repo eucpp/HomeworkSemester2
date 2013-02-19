@@ -1,5 +1,6 @@
 #include <iostream>
 #include "singleLinkedList.h"
+#include "doubleLinkedList.h"
 
 
 using namespace std;
@@ -123,12 +124,15 @@ int main()
     cout << "List manager greets you!" << endl;
     cout << "What kind of list would you like to create?" << endl;
     cout << "0 - single linked list" << endl;
+    cout << "1 - double linked list" << endl;
 
     int listType = 0;
     cin >> listType;
     AbstractList<int>* list;
     if (listType == 0)
         list = new SingleLinkedList<int>();
+    else if (listType == 1)
+        list = new DoubleLinkedList<int>();
 
     cout << endl;
     int command = Commands::help;

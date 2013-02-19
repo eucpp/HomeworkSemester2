@@ -2,16 +2,16 @@
 
 #include "abstractList.h"
 
-template <typename Type> class SingleLinkedList : public AbstractList<Type>
+template <typename Type> class DoubleLinkedList: public AbstractList<Type>
 {
 public:
-    SingleLinkedList()
+    DoubleLinkedList()
     {
         this->headElem = NULL;
         this->currentElem = NULL;
         this->elemCount = 0;
     }
-    SingleLinkedList(Type val)
+    DoubleLinkedList(Type val)
     {
         this->headElem = new ListElement<Type>();
         this->headElem->setValue(val);
@@ -20,12 +20,9 @@ public:
     }
     void prev()
     {
-        if (this->isEmpty() || this->currentElem == this->headElem)
+        if (this->isEmpty() || this->currentElem == NULL)
             return;
-        ListElement<Type>* tmp = this->headElem;
-        while (tmp->getNext() != this->currentElem)
-            tmp = tmp->getNext();
-        this->currentElem = tmp;
+        this->currentElem = this->currentElem->getPrev();
     }
     void addElement(Type val)
     {
@@ -36,6 +33,7 @@ public:
         {
             tmp = this->headElem;
             newElem->setNext(this->headElem);
+            this->headElem->setPrev(newElem);
             this->headElem = newElem;
             this->currentElem = this->headElem;
         }
@@ -45,7 +43,11 @@ public:
             newElem->setNext(tmp);
             prev();
             this->currentElem->setNext(newElem);
+            newElem->setPrev(this->currentElem);
             this->next();
+            this->next();
+            this->currentElem->setPrev(newElem);
+            prev();
         }
         this->elemCount++;
     }
@@ -71,12 +73,12 @@ public:
             delete this->currentElem;
             this->currentElem = prevElem;
             this->currentElem->setNext(nextElem);
+            nextElem->setPrev(this->currentElem);
         }
         this->elemCount--;
     }
-    ~SingleLinkedList()
+    ~DoubleLinkedList()
     {
         delete this->headElem;
     }
 };
-

@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-template <typename Type> class ListElement:
+template <typename Type> class ListElement
 {
 public:
     ListElement(): value(0), next(NULL), prev(NULL) {}
