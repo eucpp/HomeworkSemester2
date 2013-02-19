@@ -33,7 +33,10 @@ public:
         {
             tmp = this->headElem;
             newElem->setNext(this->headElem);
-            this->headElem->setPrev(newElem);
+            if (this->headElem != NULL)
+            {
+                this->headElem->setPrev(newElem);
+            }
             this->headElem = newElem;
             this->currentElem = this->headElem;
         }
@@ -45,9 +48,12 @@ public:
             this->currentElem->setNext(newElem);
             newElem->setPrev(this->currentElem);
             this->next();
-            this->next();
-            this->currentElem->setPrev(newElem);
-            prev();
+            if (this->currentElem->getNext() != NULL)
+            {
+                this->next();
+                this->currentElem->setPrev(newElem);
+                prev();
+            }
         }
         this->elemCount++;
     }
@@ -73,7 +79,10 @@ public:
             delete this->currentElem;
             this->currentElem = prevElem;
             this->currentElem->setNext(nextElem);
-            nextElem->setPrev(this->currentElem);
+            if (nextElem != NULL)
+            {
+                nextElem->setPrev(this->currentElem);
+            }
         }
         this->elemCount--;
     }
