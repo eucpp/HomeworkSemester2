@@ -3,12 +3,14 @@
 #include <iostream>
 
 
-template <typename Type> class ListElement
+template <typename Type> class ListElement:
 {
 public:
-    ListElement(): value(0), next(NULL) {}
-    ListElement(Type val): value(val), next(NULL) {}
-    ListElement(Type val, ListElement<Type>* nextElem): value(val), next(nextElem) {}
+    ListElement(): value(0), next(NULL), prev(NULL) {}
+    ListElement(Type val): value(val), next(NULL), prev(NULL) {}
+    ListElement(Type val, ListElement<Type>* nextElem): value(val), next(nextElem), prev(NULL) {}
+    ListElement(Type val, ListElement<Type>* nextElem, ListElement<Type>* prevElem):
+        value(val), next(nextElem), prev(prevElem) {}
     void setValue(Type val)
     {
         value = val;
@@ -25,12 +27,22 @@ public:
     {
         return next;
     }
+    void setPrev(ListElement<Type>* prevElem)
+    {
+        prev = prevElem;
+    }
+    ListElement<Type>* getPrev()
+    {
+        return prev;
+    }
     ~ListElement()
     {
-        delete next;
+        if (next != NULL)
+            delete next;
     }
 private:
     Type value;
     ListElement<Type>* next;
+    ListElement<Type>* prev;
 };
 
