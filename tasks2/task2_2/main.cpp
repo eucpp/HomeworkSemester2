@@ -1,5 +1,6 @@
 #include <iostream>
 #include "stackByHeap.h"
+#include "calculator.h"
 
 using namespace std;
 
@@ -40,7 +41,8 @@ void stackTest()
 
 int main()
 {
-    stackTest();
+    Calculator* calc = new Calculator;
+    calc->test();
 
     return 0;
 }
