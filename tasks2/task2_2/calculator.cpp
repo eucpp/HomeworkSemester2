@@ -12,20 +12,22 @@ Calculator::Calculator()
     stack = new StackByHeap<char>;
     polishExpr = "";
 }
-int Calculator::calc(string expression) throw(int)
+double Calculator::calc(string expression) throw(int)
 {
     parse(expression);
     string::iterator itr = polishExpr.end();
     --itr;
     return calc(itr);
 }
-int Calculator::calc(string::iterator &itr)
+double Calculator::calc(string::iterator &itr) throw(int)
 {
     char ch = *itr;
     if (isOperator(ch))
     {
-        int operandR = calc(--itr);
-        int operandL = calc(itr);
+        if (itr == polishExpr.begin())
+            throw 3;
+        double operandR = calc(--itr);
+        double operandL = calc(itr);
         switch(ch)
         {
         case '+':
@@ -38,6 +40,8 @@ int Calculator::calc(string::iterator &itr)
             return operandL * operandR;
             break;
         case '/':
+            if (operandR == 0)
+                throw 4;
             return operandL / operandR;
             break;
         }
@@ -45,18 +49,22 @@ int Calculator::calc(string::iterator &itr)
     else if (isNumber(ch))
     {
         --itr;
-        return static_cast<int>(ch - '0');
+        return static_cast<double>(ch - '0');
     }
     else if (ch == ')')
     {
+        if (itr == polishExpr.begin())
+            throw 3;
         --itr;
-        int result = 0;
+        double result = 0;
         int digit = 0;
         char num = *itr;
         while (num != '(')
         {
-            result += static_cast<int>(num - '0') * pow(10.0, digit);
+            result += static_cast<double>(num - '0') * pow(10.0, digit);
             digit++;
+            if (itr == polishExpr.begin())
+                throw 3;
             --itr;
             num = *itr;
         }
@@ -115,7 +123,7 @@ void Calculator::parse(string expression) throw(int)
             if (!stack->isEmpty())
             {
                 char opr = stack->top();
-                while (!stack->isEmpty() && (opr != '(') && (priority < getPriority(opr)))
+                while (!stack->isEmpty() && (opr != '(') && (priority <= getPriority(opr)))
                 {
                     polishExpr += stack->pop();
                     try
@@ -155,6 +163,10 @@ int Calculator::getPriority(char ch)
             return i;
     return -1;
 }
+Calculator::~Calculator()
+{
+    delete stack;
+}
 
 void Calculator::test()
 {
@@ -180,6 +192,8 @@ void Calculator::test()
     {
         cout << "Incorrect expression, error code " << e << endl;
     }
+    string::iterator itr = polishExpr.begin();
+    cout << *itr << endl;
 
     polishExpr = "";
     cout << "Calc test:" << endl;
