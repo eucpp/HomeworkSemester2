@@ -13,8 +13,7 @@ public:
     }
     SingleLinkedList(Type val)
     {
-        this->headElem = new ListElement<Type>();
-        this->headElem->setValue(val);
+        this->headElem = new ListElement<Type>(val);
         this->currentElem = this->headElem;
         this->elemCount++;
     }
@@ -29,20 +28,16 @@ public:
     }
     void addElement(Type val)
     {
-        ListElement<Type>* newElem = new ListElement<Type>();
-        newElem->setValue(val);
-        ListElement<Type>* tmp = NULL;
+        ListElement<Type>* newElem = new ListElement<Type>(val);
         if (this->currentElem == this->headElem)
         {
-            tmp = this->headElem;
             newElem->setNext(this->headElem);
             this->headElem = newElem;
             this->currentElem = this->headElem;
         }
         else
         {
-            tmp = this->currentElem;
-            newElem->setNext(tmp);
+            newElem->setNext(this->currentElem);
             prev();
             this->currentElem->setNext(newElem);
             this->next();
@@ -51,7 +46,7 @@ public:
     }
     void removeElement()
     {
-        if (this->isEmpty())
+        if (this->isEmpty() || this->currentElem == NULL)
             return;
         if (this->currentElem == this->headElem)
         {

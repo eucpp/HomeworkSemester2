@@ -13,8 +13,7 @@ public:
     }
     DoubleLinkedList(Type val)
     {
-        this->headElem = new ListElement<Type>();
-        this->headElem->setValue(val);
+        this->headElem = new ListElement<Type>(val);
         this->currentElem = this->headElem;
         this->elemCount++;
     }
@@ -26,12 +25,9 @@ public:
     }
     void addElement(Type val)
     {
-        ListElement<Type>* newElem = new ListElement<Type>();
-        newElem->setValue(val);
-        ListElement<Type>* tmp = NULL;
+        ListElement<Type>* newElem = new ListElement<Type>(val);
         if (this->currentElem == this->headElem)
         {
-            tmp = this->headElem;
             newElem->setNext(this->headElem);
             if (this->headElem != NULL)
             {
@@ -42,8 +38,9 @@ public:
         }
         else
         {
-            tmp = this->currentElem;
-            newElem->setNext(tmp);
+            if (this->currentElem == NULL)
+                return;
+            newElem->setNext(this->currentElem);
             prev();
             this->currentElem->setNext(newElem);
             newElem->setPrev(this->currentElem);
@@ -59,7 +56,7 @@ public:
     }
     void removeElement()
     {
-        if (this->isEmpty())
+        if (this->isEmpty() || this->currentElem == NULL)
             return;
         if (this->currentElem == this->headElem)
         {
