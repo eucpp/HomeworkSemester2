@@ -5,7 +5,7 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-const char Calculator::priorityTable[Calculator::tableSize] = {'-', '+', '*', '/'};
+const char Calculator::priorityTable[Calculator::tableSize] = {'+', '-', '*', '/'};
 
 Calculator::Calculator()
 {
@@ -15,11 +15,54 @@ Calculator::Calculator()
 int Calculator::calc(string expression) throw(int)
 {
     parse(expression);
-    return calc();
+    string::iterator itr = polishExpr.end();
+    --itr;
+    return calc(itr);
 }
-int Calculator::calc()
+int Calculator::calc(string::iterator &itr)
 {
-    return 0;
+    char ch = *itr;
+    if (isOperator(ch))
+    {
+        int operandR = calc(--itr);
+        int operandL = calc(itr);
+        switch(ch)
+        {
+        case '+':
+            return operandL + operandR;
+            break;
+        case '-':
+            return operandL - operandR;
+            break;
+        case '*':
+            return operandL * operandR;
+            break;
+        case '/':
+            return operandL / operandR;
+            break;
+        }
+    }
+    else if (isNumber(ch))
+    {
+        --itr;
+        return static_cast<int>(ch - '0');
+    }
+    else if (ch == ')')
+    {
+        --itr;
+        int result = 0;
+        int digit = 0;
+        char num = *itr;
+        while (num != '(')
+        {
+            result += static_cast<int>(num - '0') * pow(10.0, digit);
+            digit++;
+            --itr;
+            num = *itr;
+        }
+        --itr;
+        return result;
+    }
 }
 void Calculator::parse(string expression) throw(int)
 {
@@ -97,9 +140,13 @@ bool Calculator::isNumber(char ch)
 {
     return (ch >= '0') && (ch <= '9');
 }
+bool Calculator::isOperator(char ch)
+{
+    return (ch == '+' || ch == '-' || ch == '*' || ch =='/');
+}
 bool Calculator::permitted(char ch)
 {
-    return (isNumber(ch) || ch == '(' || ch == ')' || ch == '+' || ch == '-' || ch == '*' || ch =='/' || ch == ' ');
+    return (isNumber(ch) || ch == '(' || ch == ')' || isOperator(ch) || ch == ' ');
 }
 int Calculator::getPriority(char ch)
 {
@@ -133,4 +180,8 @@ void Calculator::test()
     {
         cout << "Incorrect expression, error code " << e << endl;
     }
+
+    polishExpr = "";
+    cout << "Calc test:" << endl;
+    cout << "Value of expression: " << calc(expr) << endl;
 }
