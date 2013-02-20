@@ -1,5 +1,6 @@
 #include <iostream>
 #include "stackByHeap.h"
+#include "stackByArray.h"
 #include "calculator.h"
 
 using namespace std;
@@ -17,10 +18,10 @@ void stackIsEmpty(AbstractStack<int>* stack)
 void stackTest()
 {
     cout << "Stack test:" << endl;
-    AbstractStack<int>* stack = new StackByHeap<int>;
+    AbstractStack<int>* stack = new StackByArray<int>;
     stackIsEmpty(stack);
 
-    const int iter = 3;
+    const int iter = 12;
     for (int i = 0; i < iter; ++i)
     {
         cout << "Enter value ";
@@ -41,9 +42,29 @@ void stackTest()
 
 int main()
 {
-    Calculator* calc = new Calculator;
-    calc->test();
+    //stackTest();
 
+    Calculator* calc = new Calculator;
+    cout << "Enter expression: " << endl;
+    string expr;
+    char ch = ' ';
+    while (ch != '\n')
+    {
+        expr += ch;
+        cin.get(ch);
+    }
+    cout << endl;
+    try
+    {
+        int value = calc->calc(expr);
+        cout << "Value of expression: " << value << endl;
+    }
+    catch (int e)
+    {
+        cout << "Incorrect expression, error code " << e << endl;
+    }
+
+    delete calc;
     return 0;
 }
 
