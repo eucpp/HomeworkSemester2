@@ -28,16 +28,16 @@ public:
             array[current++] = val;
         }
     }
-    Type pop() throw(int)
+    Type pop() throw(AccessToEmptyExc*)
     {
         if (isEmpty())
-            throw 1;
+            throw  new AccessToEmptyExc();
         return array[--current];
     }
-    Type top() throw(int)
+    Type top() throw(AccessToEmptyExc*)
     {
         if (isEmpty())
-            throw 1;
+            throw new AccessToEmptyExc();
         return array[current - 1];
     }
     bool isEmpty()

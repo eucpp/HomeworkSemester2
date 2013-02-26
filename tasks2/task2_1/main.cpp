@@ -1,6 +1,7 @@
 #include <iostream>
 #include "singleLinkedList.h"
 #include "doubleLinkedList.h"
+#include "accessToEmptyExc.h"
 
 
 using namespace std;
@@ -73,9 +74,10 @@ void acceptCommand(int command, AbstractList<int>* list)
         {
             cout << "current element: " << list->current();
         }
-        catch (int e)
+        catch (std::exception* e)
         {
-          cout << "Current element is NULL";
+            cout << e->what();
+            delete e;
         }
         break;
     case Commands::next:

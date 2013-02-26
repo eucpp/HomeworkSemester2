@@ -5,27 +5,53 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-const char Calculator::priorityTable[Calculator::tableSize] = {'+', '-', '*', '/'};
+const int tableSize = 4;
+const char priorityTable[tableSize] = {'+', '-', '*', '/'};
+
+bool isNumber(char ch)
+{
+    return (ch >= '0') && (ch <= '9');
+}
+bool isOperator(char ch)
+{
+    return (ch == '+' || ch == '-' || ch == '*' || ch =='/');
+}
+bool permitted(char ch)
+{
+    return (isNumber(ch) || ch == '(' || ch == ')' || isOperator(ch) || ch == ' ');
+}
+int getPriority(char ch)
+{
+    for (int i = 0; i < tableSize; ++i)
+        if (ch== priorityTable[i])
+            return i;
+    return -1;
+}
+
 
 Calculator::Calculator()
 {
     stack = new StackByHeap<char>;
     polishExpr = "";
 }
-double Calculator::calc(string expression) throw(int)
+Calculator::~Calculator()
+{
+    delete stack;
+}
+double Calculator::calc(string expression) throw(IncorrectExprExc*)
 {
     parse(expression);
     string::iterator itr = polishExpr.end();
     --itr;
     return calc(itr);
 }
-double Calculator::calc(string::iterator &itr) throw(int)
+double Calculator::calc(string::iterator &itr) throw(IncorrectExprExc*)
 {
     char ch = *itr;
-    if (isOperator(ch))
+    if (::isOperator(ch))
     {
         if (itr == polishExpr.begin())
-            throw 3;
+            throw new IncorrectExprExc("incorrect sequence of operators");
         double operandR = calc(--itr);
         double operandL = calc(itr);
         switch(ch)
@@ -41,12 +67,12 @@ double Calculator::calc(string::iterator &itr) throw(int)
             break;
         case '/':
             if (operandR == 0)
-                throw 4;
+                throw new IncorrectExprExc("dividing by zero");
             return operandL / operandR;
             break;
         }
     }
-    else if (isNumber(ch))
+    else if (::isNumber(ch))
     {
         --itr;
         return static_cast<double>(ch - '0');
@@ -54,7 +80,7 @@ double Calculator::calc(string::iterator &itr) throw(int)
     else if (ch == ')')
     {
         if (itr == polishExpr.begin())
-            throw 3;
+            throw new IncorrectExprExc("incorrect sequence of operators");
         --itr;
         double result = 0;
         int digit = 0;
@@ -64,7 +90,7 @@ double Calculator::calc(string::iterator &itr) throw(int)
             result += static_cast<double>(num - '0') * pow(10.0, digit);
             digit++;
             if (itr == polishExpr.begin())
-                throw 3;
+                throw new IncorrectExprExc("incorrect sequence of operators");
             --itr;
             num = *itr;
         }
@@ -72,25 +98,25 @@ double Calculator::calc(string::iterator &itr) throw(int)
         return result;
     }
 }
-void Calculator::parse(string expression) throw(int)
+void Calculator::parse(string expression) throw(IncorrectExprExc*)
 {
     int balance = 0;
     for (string::iterator itr = expression.begin(); itr != expression.end(); ++itr)
     {
         char ch = *itr;
-        if (!permitted(ch))
-            throw 1;
+        if (!::permitted(ch))
+            throw new IncorrectExprExc("invalid characters");
         if (ch == ' ')
             continue;
-        else if (isNumber(ch))
+        else if (::isNumber(ch))
         {
-            if (isNumber(*(itr + 1)))
+            if (::isNumber(*(itr + 1)))
             {
                 polishExpr += '(';
                 polishExpr += ch;
                 ch = *(++itr);
                 polishExpr += ch;
-                while (isNumber(*(itr + 1)))
+                while (::isNumber(*(itr + 1)))
                 {
                     ch = *(++itr);
                     polishExpr += ch;
@@ -109,7 +135,7 @@ void Calculator::parse(string expression) throw(int)
         {
             balance--;
             if (balance < 0)
-                throw 2;
+                throw new IncorrectExprExc("balance of brackets was broken");
             char oper = stack->pop();
             while (oper != '(')
             {
@@ -119,18 +145,18 @@ void Calculator::parse(string expression) throw(int)
         }
         else
         {
-            int priority = getPriority(ch);
+            int priority = ::getPriority(ch);
             if (!stack->isEmpty())
             {
                 char opr = stack->top();
-                while (!stack->isEmpty() && (opr != '(') && (priority <= getPriority(opr)))
+                while (!stack->isEmpty() && (opr != '(') && (priority <= ::getPriority(opr)))
                 {
                     polishExpr += stack->pop();
                     try
                     {
                         opr = stack->top();
                     }
-                    catch (int e)
+                    catch (std::exception* e)
                     {
                         break;
                     }
@@ -143,29 +169,6 @@ void Calculator::parse(string expression) throw(int)
     {
         polishExpr += stack->pop();
     }
-}
-bool Calculator::isNumber(char ch)
-{
-    return (ch >= '0') && (ch <= '9');
-}
-bool Calculator::isOperator(char ch)
-{
-    return (ch == '+' || ch == '-' || ch == '*' || ch =='/');
-}
-bool Calculator::permitted(char ch)
-{
-    return (isNumber(ch) || ch == '(' || ch == ')' || isOperator(ch) || ch == ' ');
-}
-int Calculator::getPriority(char ch)
-{
-    for (int i = 0; i < tableSize; ++i)
-        if (ch== priorityTable[i])
-            return i;
-    return -1;
-}
-Calculator::~Calculator()
-{
-    delete stack;
 }
 
 void Calculator::test()

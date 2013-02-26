@@ -1,13 +1,10 @@
 #pragma once
 
+#include "accessToEmptyExc.h"
 #include "listElement.h"
 
 template <typename Type> class AbstractList
 {
-protected:
-    ListElement<Type>* headElem;
-    ListElement<Type>* currentElem;
-    int elemCount;
 public:
     void next()
     {
@@ -20,10 +17,10 @@ public:
     {
         currentElem = headElem;
     }
-    Type current() throw(int)
+    Type current() throw(AccessToEmptyExc*)
     {
         if (currentElem == NULL)
-            throw 1;
+            throw new AccessToEmptyExc();
         return currentElem->getValue();
     }
     int count()
@@ -43,4 +40,9 @@ public:
     virtual void addElement(Type val) = 0;
     // remove current element
     virtual void removeElement() = 0;
+    virtual ~AbstractList() {}
+protected:
+    ListElement<Type>* headElem;
+    ListElement<Type>* currentElem;
+    int elemCount;
 };

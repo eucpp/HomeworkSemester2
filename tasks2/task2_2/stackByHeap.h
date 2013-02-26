@@ -18,10 +18,10 @@ public:
         newElem->setNext(head);
         head = newElem;
     }
-    Type pop() throw(int)
+    Type pop() throw(AccessToEmptyExc*)
     {
         if (isEmpty())
-            throw 1;
+            throw  new AccessToEmptyExc();
         Type result = head->getValue();
         ListElement<Type>* tmp = head;
         head = head->getNext();
@@ -29,10 +29,10 @@ public:
         delete tmp;
         return result;
     }
-    Type top() throw(int)
+    Type top() throw(AccessToEmptyExc*)
     {
         if (isEmpty())
-            throw 1;
+            throw new AccessToEmptyExc();
         return head->getValue();
     }
     bool isEmpty()

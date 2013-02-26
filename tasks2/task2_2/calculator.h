@@ -5,6 +5,9 @@
 #include "stackByHeap.h"
 #include "stackByArray.h"
 #include <math.h>
+#include <exception>
+#include "incorrectExprExc.h"
+
 using std::string;
 
 
@@ -13,15 +16,13 @@ class Calculator
 public:
     Calculator();
     ~Calculator();
-    double calc(string expression) throw(int);
+    double calc(string expression) throw(IncorrectExprExc*);
     void test();
 private:
     AbstractStack<char>* stack;
     string polishExpr;
-    static const int tableSize = 4;
-    static const char priorityTable[tableSize];
-    void parse(string expression) throw(int);
-    double calc(string::iterator &itr) throw(int);
+    void parse(string expression) throw(IncorrectExprExc*);
+    double calc(string::iterator &itr) throw(IncorrectExprExc*);
     static bool permitted(char ch);
     static bool isNumber(char ch);
     static bool isOperator(char ch);

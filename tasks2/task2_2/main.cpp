@@ -2,6 +2,8 @@
 #include "stackByHeap.h"
 #include "stackByArray.h"
 #include "calculator.h"
+#include <exception>
+#include "../task2_1/accessToEmptyExc.h"
 
 using namespace std;
 
@@ -59,9 +61,9 @@ int main()
         int value = calc->calc(expr);
         cout << "Value of expression: " << value << endl;
     }
-    catch (int e)
+    catch (std::exception* e)
     {
-        cout << "Incorrect expression, error code " << e << endl;
+        cout << e->what() << endl;
     }
 
     delete calc;
