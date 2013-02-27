@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sortable.h"
-
 /**
   * @brief Sorter is an abstract class that is used to sort arrays of objects
   *        which override the compare & assigment operators

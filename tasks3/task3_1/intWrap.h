@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sortable.h"
-
 /**
   * @brief Class-wrap for standart type int used to test Sorter class
   */
