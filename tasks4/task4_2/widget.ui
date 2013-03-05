@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>widget</class>
+ <widget class="QWidget" name="widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>381</width>
+    <height>47</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Simple Calculator</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QSpinBox" name="argLBox">
+       <property name="value">
+        <number>1</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="oprBox">
+       <item>
+        <property name="text">
+         <string>+</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>-</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>*</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>/</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="argRBox">
+       <property name="value">
+        <number>1</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>=</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="resultLineEdit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>argLBox</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>widget</receiver>
+   <slot>calc()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>41</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>44</x>
+     <y>60</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>oprBox</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>widget</receiver>
+   <slot>calc()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>122</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>117</x>
+     <y>74</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>argRBox</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>widget</receiver>
+   <slot>calc()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>188</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>192</x>
+     <y>93</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>calc()</slot>
+ </slots>
+</ui>
