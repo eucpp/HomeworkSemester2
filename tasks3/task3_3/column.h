@@ -13,13 +13,13 @@ public:
     Column()
     {
         col = new Type[Size];
-        for (int i = 0; i < Size; i++)
+        for (unsigned int i = 0; i < Size; i++)
             col[i] = 0;
     }
     Column(Column<Type, Size>& obj)
     {
         col = new Type[Size];
-        for (int i = 0; i < Size; i++)
+        for (unsigned int i = 0; i < Size; i++)
             col[i] = obj.col[i];
     }
     ~Column()
@@ -50,15 +50,15 @@ public:
     {
         return (Size != 0 && col[0] >= obj.col[0]);
     }
-    Type& operator[](const int i) throw(OutOfMatrixSizeExc*)
+    Type& operator[](const unsigned int i) throw(OutOfMatrixSizeExc*)
     {
-        if (i >= Size || i < 0)
+        if (i >= Size)
             throw new OutOfMatrixSizeExc;
         return col[i];
     }
     Column<Type, Size>& operator=(Column<Type, Size>& obj)
     {
-        for (int i = 0; i < Size; i++)
+        for (unsigned int i = 0; i < Size; i++)
             col[i] = obj.col[i];
         return *this;
     }

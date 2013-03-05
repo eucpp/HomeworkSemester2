@@ -38,6 +38,7 @@ int main()
     }
     cout << endl;
     delete [] array;
+    delete sorter;
 
     return 0;
 }

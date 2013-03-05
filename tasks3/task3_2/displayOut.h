@@ -4,7 +4,7 @@
 #include "abstractOut.h"
 
 /**
-  @brief Class outputs the strings to the dispay
+  * @brief Class outputs the strings to the dispay
   * @see AbstactOut
   */
 class DisplayOut : public AbstractOut
