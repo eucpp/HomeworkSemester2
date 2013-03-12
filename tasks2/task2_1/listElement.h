@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <QString>
 
 
 template <typename Type> class ListElement
@@ -15,9 +16,17 @@ public:
     {
         value = val;
     }
+    void setKey(QString newKey)
+    {
+        key = newKey;
+    }
     Type getValue()
     {
         return value;
+    }
+    QString getKey()
+    {
+        return key;
     }
     void setNext(ListElement<Type>* nextElem)
     {
@@ -42,6 +51,7 @@ public:
     }
 private:
     Type value;
+    QString key;
     ListElement<Type>* next;
     ListElement<Type>* prev;
 };

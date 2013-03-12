@@ -1,5 +1,7 @@
 #pragma once
 
+
+#include <QString>
 #include "accessToEmptyExc.h"
 #include "listElement.h"
 
@@ -23,6 +25,12 @@ public:
             throw new AccessToEmptyExc();
         return currentElem->getValue();
     }
+    QString currentKey() throw(AccessToEmptyExc*)
+    {
+        if (currentElem == NULL)
+            throw new AccessToEmptyExc();
+        return currentElem->getKey();
+    }
     int count()
     {
         return elemCount;
@@ -38,6 +46,11 @@ public:
     }
     // add new element before current
     virtual void addElement(Type val) = 0;
+    void addElement(Type val, QString key)
+    {
+        addElement(val);
+        currentElem->setKey(key);
+    }
     // remove current element
     virtual void removeElement() = 0;
     virtual ~AbstractList() {}

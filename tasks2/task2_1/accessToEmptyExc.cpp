@@ -3,6 +3,6 @@
 
 const char* AccessToEmptyExc::what() const throw()
 {
-    return "Try to get value from empty container";
+    return "Try to get element which doesn't exist";
 }
 
