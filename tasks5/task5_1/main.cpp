@@ -1,5 +1,6 @@
 #include <QtGui/QApplication>
 #include <QtTest/QTest>
+#include "hashTable.h"
 #include "hashTableManager.h"
 #include "hashFunction.h"
 #include "sumHashFunctionTest.h"
