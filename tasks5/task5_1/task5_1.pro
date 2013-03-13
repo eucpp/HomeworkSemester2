@@ -23,6 +23,7 @@ HEADERS  += hashTableManager.h \
     ../../tasks2/task2_1/singleLinkedList.h \
     ../../tasks2/task2_1/listElement.h \
     ../../tasks2/task2_1/accessToEmptyExc.h \
-    ../../tasks2/task2_1/abstractList.h
+    ../../tasks2/task2_1/abstractList.h \
+    hashTableTest.h
 
 FORMS    += hashTableManager.ui

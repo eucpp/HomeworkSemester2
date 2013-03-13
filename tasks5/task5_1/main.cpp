@@ -4,15 +4,20 @@
 #include "hashTableManager.h"
 #include "hashFunction.h"
 #include "sumHashFunctionTest.h"
+#include "hashTableTest.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     HashTableManager w;
     w.show();
-    QObject* test1= new SumHashFunctionTest();
-    QTest::qExec(test1);
-    delete test1;
+    QObject* testHashFunc = new SumHashFunctionTest();
+    QTest::qExec(testHashFunc);
+    QObject* testHashTable = new HashTableTest();
+    QTest::qExec(testHashTable);
+
+    delete testHashFunc;
+    delete testHashTable;
 
     return a.exec();
 }
