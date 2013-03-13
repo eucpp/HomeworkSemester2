@@ -13,7 +13,8 @@ TEMPLATE = app
 SOURCES += main.cpp\
         hashTableManager.cpp \
     sumHashFunction.cpp \
-    ../../tasks2/task2_1/accessToEmptyExc.cpp
+    ../../tasks2/task2_1/accessToEmptyExc.cpp \
+    xorHashFunction.cpp
 
 HEADERS  += hashTableManager.h \
     hashTable.h \
@@ -24,6 +25,7 @@ HEADERS  += hashTableManager.h \
     ../../tasks2/task2_1/listElement.h \
     ../../tasks2/task2_1/accessToEmptyExc.h \
     ../../tasks2/task2_1/abstractList.h \
-    hashTableTest.h
+    hashTableTest.h \
+    xorHashFunction.h
 
 FORMS    += hashTableManager.ui

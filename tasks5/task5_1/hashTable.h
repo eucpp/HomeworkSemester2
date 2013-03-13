@@ -94,12 +94,16 @@ public:
     {
         delete hashFunc;
         hashFunc = hashFunction;
-        restruct;
+        restruct(size);
     }
 
     double getLoadFactor()
     {
         return static_cast<double>(amount) / size;
+    }
+    unsigned int getSize()
+    {
+        return size;
     }
     unsigned int getMostLoadedCell()
     {
@@ -120,7 +124,9 @@ public:
     int getMostLoadedCellLength()
     {
         unsigned int mostLoaded = getMostLoadedCell();
-        return table[mostLoaded]->count();
+        if (table[mostLoaded] != NULL)
+            return table[mostLoaded]->count();
+        return 0;
     }
     unsigned int getConflictCellsNum()
     {
@@ -146,11 +152,11 @@ private:
     AbstractList<Type>* findCell(const QString key)
     {
         unsigned int hash = hashFunc->hash(key) % size;
-        table[hash]->head();
-        if (table[hash]->isEmpty())
+        if (table[hash] == NULL || table[hash]->isEmpty())
             return NULL;
         else
         {
+            table[hash]->head();
             while (!table[hash]->isEOL())
             {
                 if (key == table[hash]->currentKey())

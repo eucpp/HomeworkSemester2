@@ -12,6 +12,9 @@ public:
     ListElement(Type val, ListElement<Type>* nextElem): value(val), next(nextElem), prev(NULL) {}
     ListElement(Type val, ListElement<Type>* nextElem, ListElement<Type>* prevElem):
         value(val), next(nextElem), prev(prevElem) {}
+    ListElement(ListElement<Type>& copy): value(copy.getValue()), key(copy.getKey()),
+        next(copy.getNext()), prev(copy.getPrev()){}
+
     void setValue(Type val)
     {
         value = val;

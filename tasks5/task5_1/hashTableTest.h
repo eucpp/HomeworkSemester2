@@ -5,19 +5,11 @@
 #include <QtTest/QtTest>
 #include "hashTable.h"
 #include "sumHashFunction.h"
+#include "xorHashFunction.h"
 
 class HashTableTest : public QObject
 {
     Q_OBJECT
-public:
-    HashTableTest()
-    {
-        hash = new SumHashFunction;
-    }
-    ~HashTableTest()
-    {
-        delete hash;
-    }
 private:
     HashTable<int>* table;
     HashFunction* hash;
@@ -25,6 +17,7 @@ private:
 private slots:
     void init()
     {
+        hash = new SumHashFunction;
         table = new HashTable<int>(tableSize, hash);
     }
     void cleanup()
@@ -86,5 +79,19 @@ private slots:
         }
         catch (AccessToEmptyExc*)
         {}
+    }
+    void setHashFunctionTest()
+    {
+        table->addElement(QString("key"), 10);
+        table->setHashFunction(new XORHashFunction);
+        try
+        {
+            int actual = table->getElement(QString("key"));
+            QCOMPARE(actual, 10);
+        }
+        catch (AccessToEmptyExc*)
+        {
+            QFAIL("");
+        }
     }
 };

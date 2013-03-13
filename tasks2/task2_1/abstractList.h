@@ -44,6 +44,20 @@ public:
     {
         return (currentElem == NULL);
     }
+    bool contains(QString key)
+    {
+        if (isEmpty())
+            return false;
+        head();
+        while (!isEOL())
+        {
+            if (key == currentKey())
+                return true;
+            next();
+        }
+        head();
+        return false;
+    }
     // add new element before current
     virtual void addElement(Type val) = 0;
     void addElement(Type val, QString key)

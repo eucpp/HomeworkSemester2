@@ -17,6 +17,16 @@ public:
         this->currentElem = this->headElem;
         this->elemCount++;
     }
+    SingleLinkedList(AbstractList<Type>& copy)
+    {
+        while (!copy.isEOL())
+        {
+            this->addElement(copy.current());
+            this->currentElem->setKey(copy.currentKey());
+            copy.next();
+        }
+    }
+
     void prev()
     {
         if (this->isEmpty() || this->currentElem == this->headElem)
