@@ -6,14 +6,21 @@
 
 #include <iostream>
 #include <string>
+#include <QObject>
+#include <QtTest/QtTest>
 #include "displayOut.h"
 #include "fileOut.h"
 #include "spiralDetour.h"
+#include "spiralDetourTest.h"
 
 using namespace std;
 
 int main()
 {
+    QObject* test = new spiralDetourTest;
+    QTest::qExec(test);
+    delete test;
+
     const int n = 3;
     int** array = new int*[n];
     for (int i = 0; i < n; i++)
