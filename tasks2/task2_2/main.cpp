@@ -50,8 +50,10 @@ int main()
 {
     StackTest* stackTest1 = new StackByHeapTest();
     QTest::qExec(stackTest1);
+    delete stackTest1;
     StackTest* stackTest2 = new StackByArrayTest();
     QTest::qExec(stackTest2);
+    delete stackTest2;
 
     Calculator* calc = new Calculator;
     cout << "Enter expression: " << endl;

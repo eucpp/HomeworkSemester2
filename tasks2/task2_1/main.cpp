@@ -129,9 +129,10 @@ int main()
 
     QObject* singleListTest = new SingleLinkedListTest();
     QTest::qExec(singleListTest);
+    delete singleListTest;
     QObject* doubleListTest = new SingleLinkedListTest();
     QTest::qExec(doubleListTest);
-
+    delete doubleListTest;
 
     cout << "List manager greets you!" << endl;
     cout << "What kind of list would you like to create?" << endl;

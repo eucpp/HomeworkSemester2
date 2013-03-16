@@ -5,7 +5,10 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <QObject>
+#include <QtTest>
 #include "quickSortSorter.h"
+#include "quickSorterTest.h"
 #include "intWrap.h"
 
 using namespace std;
@@ -17,6 +20,10 @@ using namespace std;
   */
 int main()
 {
+    SorterTest* sorterTest = new QuickSorterTest;
+    QTest::qExec(sorterTest);
+    delete sorterTest;
+
     const int arraySize = 15;
     IntWrap* array = new IntWrap[arraySize];
     cout << "Before sorting" << endl;
