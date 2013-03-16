@@ -126,12 +126,12 @@ void acceptCommand(int command, AbstractList<int>* list)
 
 int main()
 {
-    /*
+
     QObject* singleListTest = new SingleLinkedListTest();
     QTest::qExec(singleListTest);
     QObject* doubleListTest = new SingleLinkedListTest();
     QTest::qExec(doubleListTest);
-    */
+
 
     cout << "List manager greets you!" << endl;
     cout << "What kind of list would you like to create?" << endl;

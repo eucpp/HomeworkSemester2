@@ -1,7 +1,11 @@
 #include <iostream>
+#include <QObject>
+#include <QtTest>
 #include "stackByHeap.h"
 #include "stackByArray.h"
 #include "calculator.h"
+#include "stackByHeapTest.h"
+#include "stackByArrayTest.h"
 #include <exception>
 #include "../task2_1/accessToEmptyExc.h"
 
@@ -44,7 +48,10 @@ void stackTest()
 
 int main()
 {
-    //stackTest();
+    StackTest* stackTest1 = new StackByHeapTest();
+    QTest::qExec(stackTest1);
+    StackTest* stackTest2 = new StackByArrayTest();
+    QTest::qExec(stackTest2);
 
     Calculator* calc = new Calculator;
     cout << "Enter expression: " << endl;
