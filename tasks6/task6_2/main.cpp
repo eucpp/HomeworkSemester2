@@ -6,6 +6,7 @@
 #include "bstNodeTest.h"
 #include "bsTree.h"
 #include "bsTreeTest.h"
+#include "setTest.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +16,10 @@ int main(int argc, char *argv[])
     BSTreeTest* treeTest = new BSTreeTest;
     QTest::qExec(treeTest);
     delete treeTest;
+    SetTest* setTest = new SetTest;
+    QTest::qExec(setTest);
+    delete setTest;
+
 
     QApplication a(argc, argv);
     MainWindow w;

@@ -3,7 +3,7 @@
 #include "bsTree.h"
 
 /**
-  * @brief Class realises methods for work with sets.
+  * @brief Class implements methods for work with sets.
   *        Operations of union and intersection two sets also implemented as a static functions.
   *        The set is implemented using a binary search tree
   */
@@ -30,10 +30,15 @@ public:
     {
         return tree->valueExist(elem);
     }
+    int countElements()
+    {
+        return tree->countNodes();
+    }
     QStack<Type> getSetElements()
     {
         return tree->detourTree();
     }
+    bool operator==(Set<Type>& set);
     static Set<Type>* unionSets(Set<Type>* set1, Set<Type>* set2);
     /**{
 
@@ -51,12 +56,25 @@ public:
             return resultSet;
 
     }*/
-
     static Set<Type>* intersectionSets(Set<Type>* set1, Set<Type>* set2);
 
 private:
     BSTree<Type>* tree;
 };
+
+template <typename Type>
+bool Set<Type>::operator==(Set<Type>& set)
+{
+    if (countElements() != set.countElements())
+        return false;
+    QStack<Type> thisSetElements = getSetElements();
+    while (!thisSetElements.isEmpty())
+    {
+        if (!set.has(thisSetElements.pop()))
+            return false;
+    }
+    return true;
+}
 
 template <typename Type>
 Set<Type>* Set<Type>::unionSets(Set<Type>* set1, Set<Type>* set2)

@@ -53,6 +53,13 @@ private slots:
         tree->removeValue(6);
         QVERIFY(tree->valueExist(8));
     }
+    void countNodesTest()
+    {
+        tree->addValue(1);
+        tree->addValue(2);
+        tree->addValue(3);
+        QCOMPARE(tree->countNodes(), 3);
+    }
 
 private:
     BSTree<int>* tree;

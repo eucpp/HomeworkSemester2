@@ -9,7 +9,7 @@
 template <typename Type> class BSTree
 {
 public:
-    BSTree(): root(NULL) {}
+    BSTree(): root(NULL), nodesNum(0) {}
     ~BSTree()
     {
         delete root;
@@ -18,6 +18,7 @@ public:
     {
         BSTNode<Type>* newNode = new BSTNode<Type>(value, NULL, NULL);
         addNode(root, newNode);
+        ++nodesNum;
     }
     void removeValue(Type removed)
     {
@@ -27,6 +28,10 @@ public:
     bool valueExist(Type value)
     {
         return nodeExist(root, new BSTNode<Type>(value, NULL, NULL));
+    }
+    int countNodes()
+    {
+        return nodesNum;
     }
     QStack<Type> detourTree()
     {
@@ -42,7 +47,7 @@ private:
     void removeNode(BSTNode<Type>*& node, BSTNode<Type>* removed);
     bool nodeExist(BSTNode<Type>* node, BSTNode<Type>* searched);
     BSTNode<Type>* getLeftmostChild(BSTNode<Type>* node);
-
+    int nodesNum;
     BSTNode<Type>* root;
 };
 
@@ -76,6 +81,7 @@ void BSTree<Type>::removeNode(BSTNode<Type>*& node, BSTNode<Type>* removed)
         {
             delete node;
             node = NULL;
+            --nodesNum;
         }
         else if (node->getLeftChild() != NULL && node->getRightChild() == NULL)
         {
@@ -83,6 +89,7 @@ void BSTree<Type>::removeNode(BSTNode<Type>*& node, BSTNode<Type>* removed)
             node = node->getLeftChild();
             tmp->setLeftChild(NULL);
             delete tmp;
+            --nodesNum;
         }
         else if (node->getLeftChild() == NULL && node->getRightChild() != NULL)
         {
@@ -90,6 +97,7 @@ void BSTree<Type>::removeNode(BSTNode<Type>*& node, BSTNode<Type>* removed)
             node = node->getRightChild();
             tmp->setRightChild(NULL);
             delete tmp;
+            --nodesNum;
         }
         else
         {
@@ -118,6 +126,7 @@ bool BSTree<Type>::nodeExist(BSTNode<Type>* node, BSTNode<Type>* searched)
         delete searched;
         return true;
     }
+    return false;
 }
 
 template <typename Type>

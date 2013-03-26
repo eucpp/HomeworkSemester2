@@ -18,6 +18,7 @@ HEADERS  += mainwindow.h \
     bstNodeTest.h \
     bsTree.h \
     bsTreeTest.h \
-    set.h
+    set.h \
+    setTest.h
 
 FORMS    += mainwindow.ui
