@@ -58,6 +58,17 @@ public:
         head();
         return false;
     }
+    bool exist(Type elem)
+    {
+        ListElement<Type>* ptr = headElem;
+        while (ptr != NULL)
+        {
+            if (ptr->getValue() == elem)
+                return true;
+            ptr = ptr->getNext();
+        }
+        return false;
+    }
     // add new element before current
     virtual void addElement(Type val) = 0;
     void addElement(Type val, QString key)

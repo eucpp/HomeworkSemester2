@@ -11,7 +11,7 @@ public:
     ListTest() {}
     virtual ~ListTest() {}
     virtual AbstractList<int>* createList() = 0;
-private:
+protected:
     AbstractList<int>* list;
 private slots:
     void init()
@@ -102,6 +102,11 @@ private slots:
         list->next();
         list->removeElement();
         QCOMPARE(list->current(), 3);
+    }
+    void existTest()
+    {
+        list->addElement(5);
+        QVERIFY(list->exist(5));
     }
 };
 

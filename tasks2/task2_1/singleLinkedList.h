@@ -36,7 +36,7 @@ public:
             tmp = tmp->getNext();
         this->currentElem = tmp;
     }
-    void addElement(Type val)
+    virtual void addElement(Type val)
     {
         ListElement<Type>* newElem = new ListElement<Type>(val);
         if (this->currentElem == this->headElem)
@@ -54,7 +54,7 @@ public:
         }
         this->elemCount++;
     }
-    void removeElement()
+    virtual void removeElement()
     {
         if (this->isEmpty() || this->currentElem == NULL)
             return;
