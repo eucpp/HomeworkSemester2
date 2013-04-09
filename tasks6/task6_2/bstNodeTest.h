@@ -55,7 +55,6 @@ private slots:
         node->setRightChild(rCh);
         QVERIFY(!node->isLeaf());
     }
-    /*
     void operatorEqualTest()
     {
         BSTNode<int>* node2 = new BSTNode<int>(2, NULL, NULL);
@@ -63,7 +62,65 @@ private slots:
         QVERIFY(*node == *node2);
         delete node2;
     }
-    */
+    void setHeightTest()
+    {
+        node->setHeight(2);
+    }
+    void getHeightTest1()
+    {
+        node->setHeight(3);
+        QCOMPARE(node->getHeight(), static_cast<unsigned int>(3));
+    }
+    void getHeightTest2()
+    {
+        BSTNode<int>* newNode = new BSTNode<int>(5, NULL, NULL);
+        node->setLeftChild(newNode);
+        QCOMPARE(node->getHeight(), static_cast<unsigned int>(1));
+    }
+    void getHeightTest3()
+    {
+        BSTNode<int>* newNode = new BSTNode<int>(5, NULL, NULL);
+        newNode->setHeight(5);
+        node->setLeftChild(newNode);
+        QCOMPARE(node->getHeight(), static_cast<unsigned int>(6));
+    }
+    void setNumTest()
+    {
+        node->setNum(5);
+    }
+    void getNumTest1()
+    {
+        node->setNum(5);
+        QCOMPARE(node->getNum(), static_cast<unsigned int>(5));
+    }
+    void incrementTest()
+    {
+        ++(*node);
+        QCOMPARE(node->getNum(), static_cast<unsigned int>(2));
+    }
+    void decrementTest()
+    {
+        --(*node);
+        QCOMPARE(node->getNum(), static_cast<unsigned int>(0));
+    }
+    void getBalanceFactorTest1()
+    {
+        BSTNode<int>* newLeftNode = new BSTNode<int>(5, NULL, NULL);
+        newLeftNode->setHeight(5);
+        BSTNode<int>* newRightNode = new BSTNode<int>(7, NULL, NULL);
+        newRightNode->setHeight(7);
+        node->setLeftChild(newLeftNode);
+        node->setRightChild(newRightNode);
+        QCOMPARE(node->getBalanceFactor(), -2);
+    }
+    void getBalanceFactorTest2()
+    {
+        BSTNode<int>* newLeftNode = new BSTNode<int>(5, NULL, NULL);
+        newLeftNode->setHeight(5);
+        node->setLeftChild(newLeftNode);
+        QCOMPARE(node->getBalanceFactor(), 5);
+    }
+
 private:
     BSTNode<int>* node;
 };

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QtGlobal>
 #include <QStack>
 
 /**
@@ -9,11 +10,20 @@
 template <typename Type> class BSTNode
 {
 public:
-    BSTNode(Type val, BSTNode* leftChild, BSTNode* rightChild): value(val), lChild(leftChild), rChild(rightChild) {}
+    BSTNode(Type val, BSTNode<Type>* leftChild, BSTNode<Type>* rightChild):
+        value(val),
+        lChild(leftChild),
+        rChild(rightChild),
+        num(1)
+    {
+        recalcHeight();
+    }
     ~BSTNode()
     {
-        delete lChild;
-        delete rChild;
+        if (lChild != NULL)
+            delete lChild;
+        if (rChild != NULL)
+            delete rChild;
     }
     void setValue(Type val)
     {
@@ -23,17 +33,19 @@ public:
     {
         return value;
     }
-    void setLeftChild(BSTNode* node)
+    void setLeftChild(BSTNode<Type>* node)
     {
         lChild = node;
+        recalcHeight();
     }
     BSTNode*& getLeftChild()
     {
         return lChild;
     }
-    void setRightChild(BSTNode* node)
+    void setRightChild(BSTNode<Type>* node)
     {
         rChild = node;
+        recalcHeight();
     }
     BSTNode*& getRightChild()
     {
@@ -56,28 +68,54 @@ public:
         if (rChild != NULL)
             rChild->detourNode(nodesStack);
     }
+    unsigned int getNum()
+    {
+        return num;
+    }
+    void setNum(unsigned int n)
+    {
+        num = n;
+    }
+    unsigned int getHeight()
+    {
+        return height;
+    }
+    void setHeight(unsigned int h)
+    {
+        height = h;
+    }
+    void recalcHeight();
+    int getBalanceFactor();
+    void operator++()
+    {
+        ++num;
+    }
+    void operator--()
+    {
+        --num;
+    }
 
     bool operator==(BSTNode<Type>& node)
     {
         return (value == node.getValue());
     }
-    bool operator!=(BSTNode& node)
+    bool operator!=(BSTNode<Type>& node)
     {
         return (value != node.value);
     }
-    bool operator<(BSTNode& node)
+    bool operator<(BSTNode<Type>& node)
     {
         return (value < node.value);
     }
-    bool operator>(BSTNode& node)
+    bool operator>(BSTNode<Type>& node)
     {
         return (value > node.value);
     }
-    bool operator<=(BSTNode& node)
+    bool operator<=(BSTNode<Type>& node)
     {
         return (value <= node.value);
     }
-    bool operator>=(BSTNode& node)
+    bool operator>=(BSTNode<Type>& node)
     {
         return (value >= node.value);
     }
@@ -85,6 +123,31 @@ private:
     Type value;
     BSTNode<Type>* lChild;
     BSTNode<Type>* rChild;
-
+    unsigned int num;
+    unsigned int height;
 };
 
+template <typename Type>
+void BSTNode<Type>::recalcHeight()
+{
+    if (lChild == NULL && rChild == NULL)
+        height = 1;
+    else if (lChild == NULL)
+        height = rChild->height + 1;
+    else if (rChild  == NULL)
+        height = lChild->height + 1;
+    else
+        height = qMax(lChild->height, rChild->height) + 1;
+}
+template <typename Type>
+int BSTNode<Type>::getBalanceFactor()
+{
+    if (lChild == NULL && rChild == NULL)
+        return 0;
+    else if (lChild == NULL)
+        return -rChild->height;
+    else if (rChild == NULL)
+        return lChild->height;
+    else
+        return lChild->height - rChild->height;
+}

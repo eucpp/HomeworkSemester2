@@ -10,7 +10,7 @@ template <typename Type> class BSTree
 {
 public:
     BSTree(): root(NULL), nodesNum(0) {}
-    ~BSTree()
+    virtual ~BSTree()
     {
         delete root;
     }
@@ -42,13 +42,13 @@ public:
         return nodes;
     }
 
-private:
-    void addNode(BSTNode<Type>*& dest, BSTNode<Type>* added);
-    void removeNode(BSTNode<Type>*& node, BSTNode<Type>* removed);
+protected:
+    virtual void addNode(BSTNode<Type>*& dest, BSTNode<Type>* added);
+    virtual void removeNode(BSTNode<Type>*& node, BSTNode<Type>* removed);
     bool nodeExist(BSTNode<Type>* node, BSTNode<Type>* searched);
     BSTNode<Type>* getLeftmostChild(BSTNode<Type>* node);
-    int nodesNum;
     BSTNode<Type>* root;
+    int nodesNum;
 };
 
 template <typename Type>
@@ -60,6 +60,7 @@ void BSTree<Type>::addNode(BSTNode<Type>*& dest, BSTNode<Type>* added)
         addNode(dest->getLeftChild(), added);
     else if (*added > *dest)
         addNode(dest->getRightChild(), added);
+    dest->recalcHeight();
 }
 
 template <typename Type>
@@ -107,6 +108,8 @@ void BSTree<Type>::removeNode(BSTNode<Type>*& node, BSTNode<Type>* removed)
         }
         delete removed;
     }
+    if (node != NULL)
+        node->recalcHeight();
 }
 
 template <typename Type>
