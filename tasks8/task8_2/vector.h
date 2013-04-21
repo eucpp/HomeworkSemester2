@@ -14,12 +14,12 @@ public:
     bool isNull();
     int& operator[](unsigned int i);
     Vector<N> operator=(Vector<N>& vector);
-    Vector<N> operator+(Vector<N> oprnd);
-    Vector<N> operator-(Vector<N> oprnd);
+    Vector<N> operator+(Vector<N>& oprnd);
+    Vector<N> operator-(Vector<N>& oprnd);
     /**
       * Scalar multiplication
       */
-    int operator*(Vector<N> oprnd);
+    int operator*(Vector<N>& oprnd);
     bool operator==(Vector<N>& vector);
 private:
     int array[N];
@@ -63,12 +63,12 @@ Vector<N> Vector<N>::operator=(Vector<N>& vector)
     {
         for (unsigned int i = 0; i < N; i++)
             array[i] = vector.array[i];
-        return *this;
     }
+    return *this;
 }
 
 template <unsigned int N>
-Vector<N> Vector<N>::operator+(Vector<N> oprnd)
+Vector<N> Vector<N>::operator+(Vector<N>& oprnd)
 {
     Vector<N> result;
     for (unsigned int i = 0; i < N; i++)
@@ -76,7 +76,7 @@ Vector<N> Vector<N>::operator+(Vector<N> oprnd)
     return result;
 }
 template <unsigned int N>
-Vector<N> Vector<N>::operator-(Vector<N> oprnd)
+Vector<N> Vector<N>::operator-(Vector<N>& oprnd)
 {
     Vector<N> result;
     for (unsigned int i = 0; i < N; i++)
@@ -84,7 +84,7 @@ Vector<N> Vector<N>::operator-(Vector<N> oprnd)
     return result;
 }
 template <unsigned int N>
-int Vector<N>::operator*(Vector<N> oprnd)
+int Vector<N>::operator*(Vector<N>& oprnd)
 {
     int result = 0;
     for (unsigned int i = 0; i < N; i++)
