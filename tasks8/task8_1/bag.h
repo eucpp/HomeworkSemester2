@@ -29,7 +29,7 @@ public:
         delete tree;
     }
 
-    void put(Type thing, unsigned int num)
+    void put(Type thing, unsigned int num = 1)
     {
         tree->addValue(thing, num);
     }
@@ -53,7 +53,13 @@ public:
     {
         return tree->countNodes();
     }
-
+    /**
+      * @return Java-style iterator of this bag.
+      */
+    Iterator<Type>* iterator()
+    {
+        return tree->iterator();
+    }
 private:
     AVLTree<Type>* tree;
 };

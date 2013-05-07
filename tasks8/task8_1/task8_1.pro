@@ -23,6 +23,8 @@ HEADERS += \
     ../../tasks6/task6_2/bstNode.h \
     ../../tasks6/task6_2/bstNodeTest.h \
     ../../tasks6/task6_2/bsTreeTest.h \
+    ../../tasks9/task9_1/iterator.h \
+    ../../tasks9/task9_1/avlTreeIterator.h \
     avlTree.h \
     avlTreeTest.h \
     bag.h \

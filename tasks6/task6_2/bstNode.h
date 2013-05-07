@@ -64,7 +64,12 @@ public:
     {
         if (lChild != NULL)
             lChild->detourNode(nodesStack);
-        nodesStack.push(value);
+        unsigned int n = num;
+        while (n > 0)
+        {
+            nodesStack.push(value);
+            --n;
+        }
         if (rChild != NULL)
             rChild->detourNode(nodesStack);
     }

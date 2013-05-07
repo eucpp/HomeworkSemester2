@@ -3,6 +3,9 @@
 #include <QDebug>
 #include "../../tasks6/task6_2/bsTree.h"
 
+template <typename Type> class Iterator;
+template <typename Type> class AVLTreeIterator;
+
 /**
   * AVLTree - self-balanced binary search tree.
   * This realization of tree let you add few copies of one element.
@@ -15,8 +18,7 @@ template <typename Type> class AVLTree : public BSTree<Type>
 public:
     void addValue(Type value);
     void addValue(Type value, unsigned int num);
-    void removeValue(Type value);
-    void removeValue(Type value, unsigned int num);
+    void removeValue(Type value, unsigned int num = 1);
     unsigned int elemNum(Type elem)
     {
         BSTNode<Type>* elemNode = getNode(this->root, elem);
@@ -28,6 +30,10 @@ public:
     {
         return checkBalance(this->root);
     }
+    /**
+      * @return Java-style iterator of this tree.
+      */
+    Iterator<Type>* iterator();
 private:
     bool checkBalance(BSTNode<Type>* node);
     BSTNode<Type>* getNode(BSTNode<Type>* node, Type searched);
@@ -56,11 +62,6 @@ void AVLTree<Type>::addValue(Type value, unsigned int num)
     newNode->setNum(num);
     addNode(this->root, newNode);
     this->nodesNum += num;
-}
-template <typename Type>
-void AVLTree<Type>::removeValue(Type value)
-{
-    BSTree<Type>::removeValue(value);
 }
 
 template <typename Type>
@@ -140,6 +141,16 @@ void AVLTree<Type>::removeNode(BSTNode<Type>*& node, BSTNode<Type>* removed)
         BSTree<Type>::removeNode(node, removed);
     if (node != NULL)
         balance(node);
+}
+
+template <typename Type>
+Iterator<Type>* AVLTree<Type>::iterator()
+{
+    QStack<Type> elements;
+    if (this->root != NULL)
+        this->root->detourNode(elements);
+    AVLTreeIterator<Type>* iterator = new AVLTreeIterator<Type>(this, elements);
+    return iterator;
 }
 
 template <typename Type>
